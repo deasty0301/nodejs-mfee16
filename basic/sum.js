@@ -4,7 +4,7 @@ function sum(n){
     let total = ((i + n)* n) / 2;
     return total;
 }
-console.log(1);
-console.log(2);
-console.log(10);
-console.log(100000);
+console.log(sum(1));
+console.log(sum(2));
+console.log(sum(10));
+console.log(sum(100000));
