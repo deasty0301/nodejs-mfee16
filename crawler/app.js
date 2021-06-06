@@ -1,30 +1,33 @@
   
-let url="https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=20210523&stockNo=2610";
+const axios = require("axios");
+const fs = require("fs");
+function readFilePromise() {
+  return new Promise((resolve, reject) => {
+    fs.readFile("Stock.txt", "utf-8", (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
 
-let url2="https://www.twse.com.tw/exchangeReport/STOCK_DAY";
-
-
-const axios= require('axios');
-
-// Method 1: full url, no needs any params content
-axios.get(url).then(function(response){
-    // console.log(response);
-    // console.log(response.data);
+readFilePromise()
+  .then((result) => {
+    // console.log(result)
+    return axios({
+      method: "get",
+      url: "https://www.twse.com.tw/exchangeReport/STOCK_DAY?",
+      params: {
+        data: 20210529,
+        stockNo: result,
+      },
+    });
+  })
+  .then(function (response) {
     console.log(response.data.title);
-    console.log(response.data.data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
-}).catch(function(error){
-    console.log(error);
-})
-
-// Method 2: simple url, controled by params content 
-axios.get(url2,{
-    params:{
-        response: "json",
-        date: "20210523",
-        stockNo: "2610"
-    }
-}).then(function(response){
-    console.log(response.data.title);
-    console.log(response.data.data);
-});
